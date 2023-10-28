@@ -24,6 +24,8 @@ exports.loginParameterValidationRules = () => {
     ]
 }
 
+
+
 exports.parameterValidation = async(req, res, next) => {
     try {
         const input_error = validationResult(req);

@@ -101,3 +101,42 @@ exports.SignUp = ({User}) => {
         
     })
 };
+
+
+
+exports.userProfile = ({Profile}) => {
+           return(async(req, res, next) => {
+            try {
+                console.log(req.user)
+                const { title, dsec,  userId } = req.body;
+                const { originalname } = req.file;
+               let token = req.token
+                const newProfile = await new Profile({
+                    title, dsec, fileName: originalname, userId, token
+                });
+
+                if(!newProfile){
+                    return res.json({
+                        status: 0,
+                        message: 'Failed insert profile'
+                    })
+                }
+
+                await newProfile.save();
+                return res.status(200).json({
+                    status: 1,
+                    message: 'Success insert profile',
+                    data: newProfile
+                })
+
+
+                
+            } catch (error) {
+                return res.json({
+                    status: 0,
+                    message: 'some is wrong'
+                })
+                
+            }
+           })
+}
